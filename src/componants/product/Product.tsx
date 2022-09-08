@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Product.module.css";
 
-const Product: React.FC<{item: ProductType}> = ({ item }) => {
+const Product: React.FC<{ item: ProductType }> = ({ item }) => {
   return (
     <>
       <div className={classes.card}>

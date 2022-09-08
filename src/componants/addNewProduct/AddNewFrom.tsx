@@ -1,13 +1,10 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  LegacyRef,
-  MutableRefObject,
-} from "react";
+import React, { useRef, useState } from "react";
 import "./addNewFrom.css";
+import axios from "axios";
 
-const AddNewFrom: React.FC<{addProd: (data: ProdAddNew)=> void}> = ({addProd}) => {
+const AddNewFrom: React.FC<{ addProd: (data: ProdAddNew) => void }> = ({
+  addProd,
+}) => {
   const inputTitle = useRef<HTMLInputElement>(null);
   const inputDes = useRef<HTMLInputElement>(null);
   const inputImg = useRef<HTMLInputElement>(null);
@@ -25,12 +22,19 @@ const AddNewFrom: React.FC<{addProd: (data: ProdAddNew)=> void}> = ({addProd}) =
         price: inputPrice.current?.value,
       };
       setItemObj(newProd);
-      console.log(newProd);
-      addProd(newProd)
+      if (newProd) {
+        const reqData = newProd
+        axios
+          .post("http://127.0.0.1:8000/api/v1/products", reqData)
+          .then(function (res) {
+            console.log(res);
+          });
+      }
+
+      addProd(newProd);
     } else {
       return;
     }
-    console.log(inputTitle.current);
   };
 
   return (

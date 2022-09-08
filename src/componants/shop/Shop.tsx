@@ -21,10 +21,9 @@ const Shop: React.FC<{
     setcartProducts((prevData) => {
       const arr = prevData?.map((el) => el);
       const obj = [...arr, data];
-      localStorage.setItem("products", JSON.stringify(obj))
+      localStorage.setItem("products", JSON.stringify(obj));
       return obj;
     });
-    ;
   };
 
   const wishHandle = (data: ProductType) => {
@@ -34,7 +33,6 @@ const Shop: React.FC<{
       localStorage.setItem("WishProducts", JSON.stringify(obj));
       return obj;
     });
-   
   };
 
   return (

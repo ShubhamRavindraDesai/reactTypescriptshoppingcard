@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CardModel from "../cardModel/CardModel";
 import Product from "../product/Product";
 import Shop from "../shop/Shop";
 import classes from "./ShoppingCard.module.css";
@@ -15,6 +16,9 @@ const ShoppingCard: React.FC<{
 
   return (
     <React.Fragment>
+      <div>
+        {model && <CardModel setModel={setModel} item={item}/>}
+      </div>
       <section>
         <div className={classes.column}>
           <div
@@ -38,11 +42,15 @@ const ShoppingCard: React.FC<{
           {itemInWishlist ? (
             <button className={classes.button}> Added to wishlist</button>
           ) : (
-            <button className={classes.button } onClick={() => {
-              wishDataHandler(item)
-              setItemInWishlist(true)
-            }}
-            >Add to wishlist</button>
+            <button
+              className={classes.button}
+              onClick={() => {
+                wishDataHandler(item);
+                setItemInWishlist(true);
+              }}
+            >
+              Add to wishlist
+            </button>
           )}
           {itemInCart ? (
             <button className={classes.button}> Added to Cart</button>
@@ -51,7 +59,7 @@ const ShoppingCard: React.FC<{
               className={classes.button}
               onClick={() => {
                 cartDataHandler(item);
-                setItemInCart(true)
+                setItemInCart(true);
               }}
             >
               Add to Cart

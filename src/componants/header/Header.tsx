@@ -20,9 +20,7 @@ const Header = () => {
             <Link to="/wishlist">Wishlist</Link>
           </li>
           <li>
-            <Link to="/cart">
-              Cart
-            </Link>
+            <Link to="/cart">Cart</Link>
           </li>
         </ul>
       </nav>

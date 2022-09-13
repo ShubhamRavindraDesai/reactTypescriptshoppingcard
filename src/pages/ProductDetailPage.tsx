@@ -28,7 +28,7 @@ const ProductDetailPage: React.FC = () => {
         <h3>{product.brand}</h3>
         <h3>{product.stock}</h3>
         <h3>${product.price}</h3>
-      </div>}
+      
       <IconButton aria-label="delete" id={`${product?.id}`}>
         <DeleteIcon        />
       </IconButton>
@@ -46,6 +46,7 @@ const ProductDetailPage: React.FC = () => {
           Add to Cart
         </CustomButton>
       )}
+      </div>}
     </Wrapper>
   )
 };

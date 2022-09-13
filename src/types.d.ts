@@ -1,4 +1,5 @@
 declare module "*.module.css";
+declare module "*.gif";
 interface ProductType {
   id: string;
   title: string;

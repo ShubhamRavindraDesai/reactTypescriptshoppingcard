@@ -7,7 +7,8 @@ import Cart from "./componants/cart/Cart";
 import Wish from "./componants/wish/Wish";
 import AddNewProduct from "./componants/addNewProduct/AddNewProduct";
 import { Wrapper } from "./App.styles";
-import ProductDetailPage from "./productDetail/ProductDetailPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import PageNotFound from "./pages/PageNotFound";
 
 const App = () => {
   const [addedProducts, setAddedProducts] = useState<ProdAddNew[]>([]);
@@ -74,6 +75,10 @@ const App = () => {
         <Route
            path="/Shop/:id"
           element={<ProductDetailPage/>}
+        />
+        <Route
+           path="*"
+          element={<PageNotFound/>}
         />
       </Routes>
     </Wrapper>

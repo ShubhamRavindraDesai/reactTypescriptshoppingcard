@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
+import { useLocation } from "react-router-dom";
 
 const AddNewProduct: React.FC<{
   productHandler: (data: ProdAddNew) => void;
@@ -12,6 +13,9 @@ const AddNewProduct: React.FC<{
   const inputImg = useRef<HTMLInputElement>(null);
   const inputPrice = useRef<HTMLInputElement>(null);
   const [itemObj, setItemObj] = useState<ProdAddNew>();
+  const location = useLocation();
+  const obj = new URLSearchParams(location.search);
+  const prefillValue = obj.get("q");
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,6 +59,12 @@ const AddNewProduct: React.FC<{
           label="Title"
           variant="standard"
           ref={inputTitle}
+        />
+        <TextField
+          disabled
+          id="outlined-disabled"
+          label="Disabled"
+          defaultValue={`${prefillValue}`}
         />
         <input
           accept="image/*"

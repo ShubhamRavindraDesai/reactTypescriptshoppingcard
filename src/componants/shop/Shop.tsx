@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import ShoppingCard from "./../shoppingCard/ShoppingCard";
+import { Wrapper } from "../shop/Cart.styles";
+import { Grid } from "@mui/material";
+import Product from "../product/Product";
 
 const Shop: React.FC<{
   items: ProductType[];
@@ -13,7 +15,8 @@ const Shop: React.FC<{
   const changeItems = (e: React.MouseEvent) => {
     e.preventDefault();
     setCardsArr((prevItems) => {
-      return prevItems.filter((el) => el._id != e.currentTarget.id);
+      console.log(e.currentTarget.id)
+      return prevItems.filter((el) => el.id != e.currentTarget.id);
     });
   };
 
@@ -36,20 +39,20 @@ const Shop: React.FC<{
   };
 
   return (
-    <>
-      {cardsArr &&
-        cardsArr.map((el) => {
-          return (
-            <ShoppingCard
-              key={el._id}
+    <Wrapper>
+      <Grid container spacing={3} >
+        {cardsArr?.map((el) => (
+          <Grid item key={el.id} xs={12} sm={4} >
+            <Product
               item={el}
-              itemDeleteHandler={changeItems}
-              cartDataHandler={cartDataHandle}
-              wishDataHandler={wishHandle}
+              productHandler={changeItems}
+              cartHandler={cartDataHandle}
+              wishHandler={wishHandle}
             />
-          );
-        })}
-    </>
+          </Grid>
+        ))}
+      </Grid>
+    </Wrapper>
   );
 };
 

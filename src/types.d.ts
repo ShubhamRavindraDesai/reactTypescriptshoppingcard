@@ -1,10 +1,16 @@
 declare module "*.module.css";
 interface ProductType {
-  _id: string;
+  id: string;
   title: string;
-  images: string;
+  images: string[];
   description: string;
-  price: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
 }
 
 interface ProdAddNew {
@@ -12,7 +18,7 @@ interface ProdAddNew {
   description: string | undefined;
   images: string | undefined;
   price: string | undefined;
-} 
+}
 // declare module "*.svg" {
 //     const content: any;
 //     export default content;

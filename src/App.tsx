@@ -1,23 +1,23 @@
-import React, { useState, useEffect, useReducer } from "react";
-import { Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 import axios from "axios";
-import Header from "./componants/header/Header";
+import ResponsiveAppBar from "./componants/header/Header";
 import Shop from "./componants/shop/Shop";
 import Cart from "./componants/cart/Cart";
 import Wish from "./componants/wish/Wish";
 import AddNewProduct from "./componants/addNewProduct/AddNewProduct";
-import Product from "./componants/product/Product";
-
-// import NewProduct from "./componants/addProduct/NewProduct";
+import { Wrapper } from "./App.styles";
+import ProductDetailPage from "./productDetail/ProductDetailPage";
 
 const App = () => {
   const [addedProducts, setAddedProducts] = useState<ProdAddNew[]>([]);
   const [products, setProducts] = useState<ProductType[]>();
   const [cartData, setCartData] = useState<ProductType[]>([]);
   const [wishData, setWishdata] = useState<ProductType[]>([]);
+
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/v1/products").then((resData) => {
-      setProducts(resData.data);
+    axios.get("https://dummyjson.com/products").then((resData) => {
+      setProducts(resData.data.products);
     });
 
     const cartdataObj: string = localStorage.getItem("products")!;
@@ -44,26 +44,39 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Header />
-      <Route path="/" exact >
-        {products && 
-          <Shop items={products} cartItems={cartData} wishItems={wishData} />
-        }
-      </Route>
-      <Route path="/cart" exact >
-        <Cart cartItems={cartData} />
-      </Route>
-      <Route path="/wishList"  exact>
-        <Wish items={wishData} />
-      </Route>
-      <Route path="/addNewProduct"  exact>
-        <AddNewProduct productHandler={prodAdd} />
-      </Route>
-      <Route path='/:id'>
-      {/* <Product/> */}
-      </Route>
-    </div>
+    <Wrapper>
+      <ResponsiveAppBar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            products && (
+              <Shop
+                items={products}
+                cartItems={cartData}
+                wishItems={wishData}
+              />
+            )
+          }
+        />
+        <Route
+          path="/Cart"
+          element={<Cart cartItems={cartData} wishItems={wishData} />}
+        />
+        <Route
+          path="/WishList"
+          element={<Wish items={wishData} cartItems={cartData} />}
+        />
+        <Route
+          path="/Admin"
+          element={<AddNewProduct productHandler={prodAdd} />}
+        />
+        <Route
+           path="/Shop/:id"
+          element={<ProductDetailPage/>}
+        />
+      </Routes>
+    </Wrapper>
   );
 };
 

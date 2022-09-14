@@ -1,11 +1,12 @@
 import { Wrapper } from "./CartItem.styles";
 import CustomButton from "../button/Button";
+import {useContext} from 'react'
+import ProdContext from "../../storage/ProdContext";
 
 const WishItem: React.FC<{
   item: ProductType;
-  removeFromWish: (data: ProductType) => void;
-  cartHandler: (data: ProductType) => void;
-}> = ({ item, removeFromWish, cartHandler }) => {
+}> = ({ item}) => {
+  const prodContext = useContext(ProdContext)
   return (
     <Wrapper>
       <div>
@@ -17,7 +18,7 @@ const WishItem: React.FC<{
         <div className="buttons">
           <CustomButton
             onClick={() => {
-              removeFromWish(item);
+              prodContext.wishHandler(item);
             }}
           >
             Remove From WishList

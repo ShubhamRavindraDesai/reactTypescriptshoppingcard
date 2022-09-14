@@ -1,10 +1,25 @@
 import { useRef, useState, useContext } from "react";
+import axios from "axios";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import { useLocation } from "react-router-dom";
 import ProdContext from "../../storage/ProdContext";
+
+const addProduct = async(path: string, data: {}) =>{
+  try{
+    await axios.post(path , data)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  } catch(err) {
+    throw(err)
+  }
+}
 
 const AddNewProduct: React.FC<{}> = () => {
   const prodContext = useContext(ProdContext);
@@ -33,6 +48,7 @@ const AddNewProduct: React.FC<{}> = () => {
         price: inputPrice.current?.value,
         image: inputImg.current?.value,
       };
+      addProduct('https://dummyjson.com/products/add', newProd)
       console.log(newProd);
       inputTitle.current.value = "";
       inputDes.current!.value = "";

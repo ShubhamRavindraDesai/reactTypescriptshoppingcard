@@ -1,4 +1,3 @@
-import { useState} from "react";
 import { Route, Routes } from "react-router-dom";
 import ResponsiveAppBar from "./componants/header/Header";
 import Shop from "./componants/shop/Shop";
@@ -8,10 +7,6 @@ import AddNewProduct from "./componants/addNewProduct/AddNewProduct";
 import { Wrapper } from "./App.styles";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import PageNotFound from "./pages/PageNotFound";
-import {
-  ErrorBoundaryContext,
-  useErrorBoundary,
-} from "react-use-error-boundary";
 
 
 

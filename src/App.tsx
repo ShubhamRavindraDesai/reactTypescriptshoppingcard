@@ -8,7 +8,6 @@ import { Wrapper } from "./App.styles";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import PageNotFound from "./pages/PageNotFound";
 
-
 const App = () => { 
   return (
     <Wrapper>

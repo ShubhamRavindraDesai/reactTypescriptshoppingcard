@@ -51,8 +51,8 @@ export const ProductContextProvider = (props: Iprops) => {
   const [cartData, cartdispatchFn] = useReducer(reducerFn, { items: [] });
 
   useEffect(() => {
-    console.log(process.env);
-    getShopProducts("http://127.0.0.1:8000/api/v1/products").then((resData) => {
+    console.log(process.env.REACT_APP_PATHURL)
+    getShopProducts(`${process.env.REACT_APP_PATHURL}`).then((resData) => {
       dispatchFn({
         type: CountActionKind.RESDATA,
         payload: { items: [...resData] },

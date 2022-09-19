@@ -15,7 +15,7 @@ export const updateProducts = async (
 ) => {
   try {
     await axios.patch(
-      `http://127.0.0.1:8000/api/v1/products/${product._id}`,
+      `${process.env.REACT_APP_PATHURL}/${product._id}`,
       data
     );
   } catch (err) {
@@ -26,7 +26,7 @@ export const updateProducts = async (
 export const deleteShopProducts = async (product: ProductType) => {
   try {
     const response = await axios.delete(
-      `http://127.0.0.1:8000/api/v1/products/${product._id}`
+      `${process.env.REACT_APP_PATHURL}/${product._id}`
     );
     return response.data.status;
   } catch (err) {
@@ -37,7 +37,7 @@ export const deleteShopProducts = async (product: ProductType) => {
 export const createProduct = async (data: any) => {
   try {
     const response = await axios.post(
-      `http://127.0.0.1:8000/api/v1/products`,
+      `${process.env.REACT_APP_PATHURL}`,
       data
     );
 

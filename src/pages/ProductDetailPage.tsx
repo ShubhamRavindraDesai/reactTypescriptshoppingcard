@@ -7,14 +7,15 @@ import IconButton from "@mui/material/IconButton";
 import CustomButton from '../componants/button/Button';
 
 
-const ProductDetailPage: React.FC = () => {
+const ProductDetailPage = ()=> {
   const [product, setProduct] = useState<ProductType>()
   const [itemInWishlist, setItemInWishlist] = useState(false);
   const [itemInCart, setItemInCart] = useState(false);
   const location = useLocation()
   const id = location.pathname.split('/')[2]
+  console.log(id)
   useEffect(() =>{
-    axios.get(`https://dummyjson.com/products/${id}`).then((res) => {
+    axios.get(`http://127.0.0.1:8000/api/v1/products/${id}`).then((res) => {
       console.log(res.data)
       setProduct(res.data)
     })
@@ -29,7 +30,7 @@ const ProductDetailPage: React.FC = () => {
         <h3>{product.stock}</h3>
         <h3>${product.price}</h3>
       
-      <IconButton aria-label="delete" id={`${product?.id}`}>
+      <IconButton aria-label="delete" id={`${product?._id}`}>
         <DeleteIcon        />
       </IconButton>
       {itemInWishlist ? (

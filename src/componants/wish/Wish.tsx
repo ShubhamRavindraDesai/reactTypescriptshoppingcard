@@ -10,7 +10,7 @@ const Wish: React.FC<{}> = () => {
     <Wrapper>
       <Grid container spacing={3}>
         {prodContext.wishProducts?.map((el) => (
-          <Grid item key={el.id} xs={12} sm={4}>
+          <Grid item key={el._id} xs={12} sm={4}>
             <WishItem
               item={el}
             />

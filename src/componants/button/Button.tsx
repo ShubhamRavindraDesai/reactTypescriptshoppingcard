@@ -1,12 +1,11 @@
-import * as React from 'react';
-import ButtonUnstyled, { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
-import { styled } from '@mui/system';
-import Stack from '@mui/material/Stack';
-
+import ButtonUnstyled, {
+  buttonUnstyledClasses,
+} from "@mui/base/ButtonUnstyled";
+import { styled } from "@mui/system";
 const blue = {
-  500: '#007FFF',
-  600: '#0072E5',
-  700: '#0059B2',
+  500: "#007FFF",
+  600: "#0072E5",
+  700: "#0059B2",
 };
 
 const CustomButton = styled(ButtonUnstyled)`
@@ -30,7 +29,8 @@ const CustomButton = styled(ButtonUnstyled)`
   }
 
   &.${buttonUnstyledClasses.focusVisible} {
-    box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1), 0 0 0 5px rgba(0, 127, 255, 0.5);
+    box-shadow: 0 4px 20px 0 rgba(61, 71, 82, 0.1),
+      0 0 0 5px rgba(0, 127, 255, 0.5);
     outline: none;
   }
 
@@ -40,6 +40,4 @@ const CustomButton = styled(ButtonUnstyled)`
   }
 `;
 
-
-export default CustomButton
-
+export default CustomButton;

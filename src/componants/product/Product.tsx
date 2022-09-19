@@ -1,22 +1,22 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Wrapper } from "./Item.styles";
-import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import CustomButton from "../button/Button";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ProdContext from "../../storage/ProdContext";
-
-const Product: React.FC<{
+interface Iprops {
   item: ProductType;
-}> = ({ item }) => {
+}
+
+const Product = ({ item }: Iprops) => {
   const prodContext = useContext(ProdContext);
 
   const navigate = useNavigate();
 
   return (
     <Wrapper>
-      <div onClick={() => navigate(`/shop/${item.id}`)}>
+      <div onClick={() => navigate(`/shop/${item._id}`)}>
         <img src={item.images[0]} alt={item.title} />
         <h3>{item.title}</h3>
         <p>{item.description}</p>
@@ -24,9 +24,9 @@ const Product: React.FC<{
       </div>
       <IconButton
         aria-label="delete"
-        id={`${item.id}`}
-        onClick={(e: React.MouseEvent<Element, MouseEvent>) => {
-          prodContext.productHandler(e);
+        id={`${item._id}`}
+        onClick={() => {
+          prodContext.productHandler(item);
         }}
       >
         <DeleteIcon />
@@ -42,7 +42,7 @@ const Product: React.FC<{
           Add to wishlist
         </CustomButton>
       )}
-      {prodContext.cartProducts.includes(item) ? (
+      {prodContext.cartProducts?.includes(item) ? (
         <CustomButton> Added to Cart</CustomButton>
       ) : (
         <CustomButton

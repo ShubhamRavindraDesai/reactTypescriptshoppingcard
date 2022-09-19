@@ -1,25 +1,10 @@
-import { useRef, useState, useContext } from "react";
-import axios from "axios";
+import { useRef, useContext } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import { useLocation } from "react-router-dom";
 import ProdContext from "../../storage/ProdContext";
-
-const addProduct = async(path: string, data: {}) =>{
-  try{
-    await axios.post(path , data)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  } catch(err) {
-    throw(err)
-  }
-}
 
 const AddNewProduct: React.FC<{}> = () => {
   const prodContext = useContext(ProdContext);
@@ -28,12 +13,7 @@ const AddNewProduct: React.FC<{}> = () => {
   const inputDes = useRef<HTMLInputElement>(null);
   const inputImg = useRef<HTMLInputElement>(null);
   const inputPrice = useRef<HTMLInputElement>(null);
-
-  const [itemObj, setItemObj] = useState<{
-    title: string;
-    description: string;
-    price: string;
-  }>();
+  const inputDiscountPercentage = useRef<HTMLInputElement>(null);
 
   const location = useLocation();
   const obj = new URLSearchParams(location.search);
@@ -46,14 +26,16 @@ const AddNewProduct: React.FC<{}> = () => {
         title: inputTitle.current.value,
         description: inputDes.current?.value,
         price: inputPrice.current?.value,
-        image: inputImg.current?.value,
+        images: inputImg.current?.value,
+        discountPercentage: inputDiscountPercentage.current?.value,
       };
-      addProduct('https://dummyjson.com/products/add', newProd)
+      prodContext.productFromHandler( newProd)
       console.log(newProd);
       inputTitle.current.value = "";
       inputDes.current!.value = "";
       inputPrice.current!.value = "";
       inputImg.current!.value = "";
+      inputDiscountPercentage.current!.value = ""
     } else {
       return;
     }
@@ -89,12 +71,23 @@ const AddNewProduct: React.FC<{}> = () => {
             variant="standard"
             inputRef={inputPrice}
           />
+          <TextField
+            id="standard-basic"
+            label="image"
+            variant="standard"
+            inputRef={inputImg}
+          />
           <input
             accept="image/*"
             id="contained-button-file"
             multiple
             type="file"
-            ref={inputImg}
+          />
+          <TextField
+            id="standard-basic"
+            label="discountPercentage"
+            variant="standard"
+            inputRef={inputDiscountPercentage}
           />
           <Button type="submit" variant="contained" endIcon={<SendIcon />}>
             Submit

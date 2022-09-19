@@ -1,7 +1,29 @@
 declare module "*.module.css";
 declare module "*.gif";
+
+interface Data {
+  items: ProductType[];
+}
+
+interface CountAction {
+  type: CountActionKind;
+  payload: { items: ProductType[] };
+}
+
+
+interface ContextTypes {
+  products: ProductType[] | undefined;
+  cartProducts: ProductType[];
+  wishProducts: ProductType[];
+  productHandler: (data: ProductType) => void;
+  cartDataHandler: (data: ProductType) => void;
+  wishHandler: (data: ProductType) => void;
+  cartProductHandler: (data: ProductType) => void;
+  wishProductHandler: (data: ProductType) => void;
+  productFromHandler: (data: ProdAddNew) => void;
+}
 interface ProductType {
-  id: string;
+  _id: string;
   title: string;
   images: string[];
   description: string;
@@ -12,6 +34,8 @@ interface ProductType {
   brand: string;
   category: string;
   thumbnail: string;
+  inWish: boolean;
+  inCart: boolean;
 }
 
 interface ProdAddNew {

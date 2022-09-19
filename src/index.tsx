@@ -5,7 +5,9 @@ import { BrowserRouter } from "react-router-dom";
 import { ProductContextProvider } from "./storage/ProdContext";
 import {ErrorBoundary} from 'react-error-boundary'
 import { ErrorFallback } from "./componants/ErrorFallback";
+// import dotenv from 'dotenv'
 
+// dotenv.config();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

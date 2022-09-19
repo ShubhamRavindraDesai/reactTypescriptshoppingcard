@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Wrapper } from "../shop/Cart.styles";
 import { Grid } from "@mui/material";
 import Product from "../product/Product";
@@ -11,7 +11,7 @@ const Shop: React.FC<{}> = () => {
     <Wrapper>
       <Grid container spacing={3} >
         {prodContext.products?.map((el) => (
-          <Grid item key={el.id} xs={12} sm={4} >
+          <Grid item key={el._id} xs={12} sm={4} >
             <Product
               item={el}
             />

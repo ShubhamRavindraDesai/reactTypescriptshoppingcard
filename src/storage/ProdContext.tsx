@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect, useReducer } from "react";
+import {
+  getShopProducts,
+  updateProducts,
+  deleteShopProducts,
+  createProduct,
+} from "../controllers/prodController";
 
-interface ContextTypes {
-  products: ProductType[] | undefined;
-  cartProducts: ProductType[];
-  wishProducts: ProductType[];
-  productHandler: (e: React.MouseEvent) => void;
-  cartDataHandler: (data: ProductType) => void;
-  wishHandler: (data: ProductType) => void;
-  cartProductHandler: (data: ProductType) => void;
-  wishProductHandler: (data: ProductType) => void;
-  productFromHandler: (data: ProdAddNew) => void;
-}
+// Creating context
 
 const ProdContext = React.createContext<ContextTypes>({
   products: [],
@@ -25,95 +20,133 @@ const ProdContext = React.createContext<ContextTypes>({
   productFromHandler: () => {},
 });
 
-export const ProductContextProvider: React.FC<{ children: JSX.Element }> = (
-  props
-) => {
-  const [items, setitems] = useState<ProductType[]>();
-  const [cartData, setCartData] = useState<ProductType[]>([]);
-  const [wishData, setWishdata] = useState<ProductType[]>([]);
-  const [addedProducts, setAddedProducts] = useState<ProdAddNew[]>([]);
+enum CountActionKind {
+  RESDATA = "RESDATA",
+  CHANGEDATA = "CHANGEDATA",
+}
+
+const reducerFn = (state: Data, action: CountAction) => {
+  const { type, payload } = action;
+  switch (type) {
+    case CountActionKind.RESDATA:
+      state.items = payload.items;
+      return { ...state };
+    case CountActionKind.CHANGEDATA:
+      state.items = payload.items;
+      return {
+        ...state,
+      };
+    default:
+      return state;
+  }
+};
+
+interface Iprops {
+  children: JSX.Element;
+}
+
+export const ProductContextProvider = (props: Iprops) => {
+  const [shopProducts, dispatchFn] = useReducer(reducerFn, { items: [] });
+  const [wishData, wishdispatchFn] = useReducer(reducerFn, { items: [] });
+  const [cartData, cartdispatchFn] = useReducer(reducerFn, { items: [] });
 
   useEffect(() => {
-    axios.get("https://dummyjson.com/products").then((resData) => {
-      setitems(resData.data.products);
+    console.log(process.env);
+    getShopProducts("http://127.0.0.1:8000/api/v1/products").then((resData) => {
+      dispatchFn({
+        type: CountActionKind.RESDATA,
+        payload: { items: [...resData] },
+      });
+
+      const wishArr = resData.filter((el: ProductType) => el.inWish === true);
+      wishdispatchFn({
+        type: CountActionKind.RESDATA,
+        payload: { items: [...wishArr] },
+      });
+
+      const cartArr = resData.filter((el: ProductType) => el.inCart === true);
+
+      cartdispatchFn({
+        type: CountActionKind.RESDATA,
+        payload: { items: [...cartArr] },
+      });
     });
-    const cartdataObj: string = localStorage.getItem("products")!;
-
-    if (cartdataObj) {
-      setCartData(JSON.parse(localStorage.getItem("products")!));
-    } else {
-      setCartData([]);
-    }
-    const wishdataObj: string = localStorage.getItem("WishProducts")!;
-
-    if (wishdataObj) {
-      setWishdata(JSON.parse(localStorage.getItem("WishProducts")!));
-    } else {
-      setWishdata([]);
-    }
   }, []);
 
-  const changeItems = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setitems((prevItems) => {
-      console.log(e.currentTarget.id);
-      const arr = prevItems?.filter((el) => el.id != e.currentTarget.id);
-      console.log(arr);
-      return arr;
+  const changeItems = (product: ProductType) => {
+    deleteShopProducts(product).then((status) => {
+      const newArr = shopProducts.items.filter((el: ProductType) => {
+        return el !== product;
+      });
+      dispatchFn({
+        type: CountActionKind.CHANGEDATA,
+        payload: { items: newArr },
+      });
     });
   };
 
   const cartDataHandle = (data: ProductType) => {
-    setCartData((prevData) => {
-      const arr = prevData?.filter((el) => el !== data);
-      const obj = [...arr];
-      localStorage.setItem("products", JSON.stringify(obj));
-      return obj;
+    updateProducts(data, { inCart: false }).then(() => {
+      const newArr = cartData.items.filter((el: ProductType) => {
+        return el !== data;
+      });
+      cartdispatchFn({
+        type: CountActionKind.CHANGEDATA,
+        payload: { items: newArr },
+      });
+    });
+  };
+  const cartProductAdder = (product: ProductType) => {
+    updateProducts(product, { inCart: true }).then(() => {
+      const newArr = [...cartData.items, product];
+      cartdispatchFn({
+        type: CountActionKind.CHANGEDATA,
+        payload: { items: newArr },
+      });
     });
   };
   const wishHandle = (data: ProductType) => {
-    setWishdata((prevData) => {
-      const arr = prevData?.filter((el) => el !== data);
-      const obj = [...arr];
-      localStorage.setItem("WishProducts", JSON.stringify(obj));
-      return obj;
+    updateProducts(data, { inWish: false }).then(() => {
+      const newArr = wishData.items.filter((el: ProductType) => {
+        return el !== data;
+      });
+      wishdispatchFn({
+        type: CountActionKind.CHANGEDATA,
+        payload: { items: newArr },
+      });
     });
   };
 
-  const cartProductHandle = (data: ProductType) => {
-    setCartData((prevData) => {
-      const arr = prevData?.map((el) => el);
-      const obj = [...arr, data];
-      localStorage.setItem("products", JSON.stringify(obj));
-      return obj;
+  const wishProductAdder = (product: ProductType) => {
+    updateProducts(product, { inWish: true }).then(() => {
+      const newArr = [...wishData.items, product];
+      wishdispatchFn({
+        type: CountActionKind.CHANGEDATA,
+        payload: { items: newArr },
+      });
     });
   };
-  const wishProductHandle = (data: ProductType) => {
-    setWishdata((prevData) => {
-      const arr = prevData?.map((el) => el);
-      const obj = [...arr, data];
-      localStorage.setItem("WishProducts", JSON.stringify(obj));
-      return obj;
-    });
-  };
-  const prodAdd = (data: ProdAddNew) => {
-    setAddedProducts((prevProd) => {
-      const arr = [...prevProd, data];
-      return arr;
+  const prodAdd = (product: ProdAddNew) => {
+    createProduct(product).then((prod) => {
+      const newArr = [...shopProducts.items, prod];
+      dispatchFn({
+        type: CountActionKind.CHANGEDATA,
+        payload: { items: newArr },
+      });
     });
   };
 
   return (
     <ProdContext.Provider
       value={{
-        products: items,
-        cartProducts: cartData,
-        wishProducts: wishData,
+        products: shopProducts.items,
+        cartProducts: cartData.items,
+        wishProducts: wishData.items,
         productHandler: changeItems,
         cartDataHandler: cartDataHandle,
         wishHandler: wishHandle,
-        cartProductHandler: cartProductHandle,
-        wishProductHandler: wishProductHandle,
+        cartProductHandler: cartProductAdder,
+        wishProductHandler: wishProductAdder,
         productFromHandler: prodAdd,
       }}
     >

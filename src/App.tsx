@@ -9,9 +9,7 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 import PageNotFound from "./pages/PageNotFound";
 
 
-
-const App = () => {
-  
+const App = () => { 
   return (
     <Wrapper>
       <ResponsiveAppBar />

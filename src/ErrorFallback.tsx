@@ -1,4 +1,4 @@
- interface Iprops {
+interface Iprops {
     error: Error
     resetErrorBoundary: () => void
  }

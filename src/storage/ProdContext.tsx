@@ -1,4 +1,6 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
+import { useErrorHandler } from "react-error-boundary";
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   getShopProducts,
   updateProducts,
@@ -49,29 +51,36 @@ export const ProductContextProvider = (props: Iprops) => {
   const [shopProducts, dispatchFn] = useReducer(reducerFn, { items: [] });
   const [wishData, wishdispatchFn] = useReducer(reducerFn, { items: [] });
   const [cartData, cartdispatchFn] = useReducer(reducerFn, { items: [] });
+  const [loading, setLoading] = useState(true);
+  const handleError = useErrorHandler();
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_PATHURL)
-    getShopProducts(`${process.env.REACT_APP_PATHURL}`).then((resData) => {
-      dispatchFn({
-        type: CountActionKind.RESDATA,
-        payload: { items: [...resData] },
-      });
+    getShopProducts(`${process.env.REACT_APP_PATHURL}`)
+      .then((resData) => {
+        setLoading(false);
+        dispatchFn({
+          type: CountActionKind.RESDATA,
+          payload: { items: [...resData] },
+        });
 
-      const wishArr = resData.filter((el: ProductType) => el.inWish === true);
-      wishdispatchFn({
-        type: CountActionKind.RESDATA,
-        payload: { items: [...wishArr] },
-      });
+        const wishArr = resData.filter((el: ProductType) => el.inWish === true);
+        wishdispatchFn({
+          type: CountActionKind.RESDATA,
+          payload: { items: [...wishArr] },
+        });
 
-      const cartArr = resData.filter((el: ProductType) => el.inCart === true);
+        const cartArr = resData.filter((el: ProductType) => el.inCart === true);
 
-      cartdispatchFn({
-        type: CountActionKind.RESDATA,
-        payload: { items: [...cartArr] },
+        cartdispatchFn({
+          type: CountActionKind.RESDATA,
+          payload: { items: [...cartArr] },
+        });
+      })
+      .catch((err) => {
+        handleError(err);
+        throw err;
       });
-    });
-  }, []);
+  }, [handleError]);
 
   const changeItems = (product: ProductType) => {
     deleteShopProducts(product).then((status) => {
@@ -150,7 +159,22 @@ export const ProductContextProvider = (props: Iprops) => {
         productFromHandler: prodAdd,
       }}
     >
-      {props.children}
+      {!loading ? (
+        props.children
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100vw",
+            height: "100vh",
+          }}
+        >
+          <h1>Loading...</h1>
+          <CircularProgress />
+        </div>
+      )}
     </ProdContext.Provider>
   );
 };

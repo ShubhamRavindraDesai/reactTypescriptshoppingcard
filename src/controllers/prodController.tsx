@@ -14,10 +14,7 @@ export const updateProducts = async (
   data: { inWish?: boolean; inCart?: boolean }
 ) => {
   try {
-    await axios.patch(
-      `${process.env.REACT_APP_PATHURL}/${product._id}`,
-      data
-    );
+    await axios.patch(`${process.env.REACT_APP_PATHURL}/${product._id}`, data);
   } catch (err) {
     throw err;
   }
@@ -36,10 +33,7 @@ export const deleteShopProducts = async (product: ProductType) => {
 
 export const createProduct = async (data: any) => {
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_PATHURL}`,
-      data
-    );
+    const response = await axios.post(`${process.env.REACT_APP_PATHURL}`, data);
 
     return response.data.product;
   } catch (err) {

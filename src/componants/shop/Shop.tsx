@@ -3,9 +3,11 @@ import { Wrapper } from "../shop/Cart.styles";
 import { Grid } from "@mui/material";
 import Product from "../product/Product";
 import ProdContext from "../../storage/ProdContext";
+interface Iprops {
 
+}
 
-const Shop: React.FC<{}> = () => {
+const Shop = (props: Iprops) => {
   const prodContext = useContext(ProdContext)
   return (
     <Wrapper>

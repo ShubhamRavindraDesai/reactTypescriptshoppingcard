@@ -29,13 +29,12 @@ const AddNewProduct: React.FC<{}> = () => {
         images: inputImg.current?.value,
         discountPercentage: inputDiscountPercentage.current?.value,
       };
-      prodContext.productFromHandler( newProd)
-      console.log(newProd);
+      prodContext.productFromHandler(newProd);
       inputTitle.current.value = "";
       inputDes.current!.value = "";
       inputPrice.current!.value = "";
       inputImg.current!.value = "";
-      inputDiscountPercentage.current!.value = ""
+      inputDiscountPercentage.current!.value = "";
     } else {
       return;
     }

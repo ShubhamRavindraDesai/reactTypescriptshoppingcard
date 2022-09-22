@@ -1,26 +1,20 @@
 declare module "*.module.css";
 declare module "*.gif";
 
-interface Data {
+interface ProdData {
   items: ProductType[];
+  wishItems: ProductType[];
+  cartItems: ProductType[];
 }
+enum CountActionKind {
+  RESDATA = "RESDATA",
+  CHANGEDATA = "CHANGEDATA",
+}
+
 
 interface CountAction {
   type: CountActionKind;
   payload: { items: ProductType[] };
-}
-
-
-interface ContextTypes {
-  products: ProductType[] | undefined;
-  cartProducts: ProductType[];
-  wishProducts: ProductType[];
-  productHandler: (data: ProductType) => void;
-  cartDataHandler: (data: ProductType) => void;
-  wishHandler: (data: ProductType) => void;
-  cartProductHandler: (data: ProductType) => void;
-  wishProductHandler: (data: ProductType) => void;
-  productFromHandler: (data: ProdAddNew) => void;
 }
 interface ProductType {
   _id: string;
@@ -51,4 +45,16 @@ interface ProdAddNew {
 
 interface Products {
   products: ProductType[];
+}
+
+interface CreateAssetType {
+  brandName: string;
+  assetName: string;
+  assetType: string;
+  category: string;
+  modelNo: string;
+  description: string;
+  status: string;
+  usability: string;
+  Title: string
 }

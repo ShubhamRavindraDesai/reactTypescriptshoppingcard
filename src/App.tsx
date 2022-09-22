@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import ResponsiveAppBar from "./componants/header/Header";
-import Shop from "./componants/shop/Shop";
-import Cart from "./componants/cart/Cart";
-import Wish from "./componants/wish/Wish";
-import AddNewProduct from "./componants/addNewProduct/AddNewProduct";
+import Shop from "./pages/shop/Shop";
+import Cart from "./pages/cart/Cart";
+import Wish from "./pages/wish/Wish";
+import AddNewProduct from "./pages/addNewProduct/AddNewProduct";
 import { Wrapper } from "./App.styles";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import PageNotFound from "./pages/PageNotFound";

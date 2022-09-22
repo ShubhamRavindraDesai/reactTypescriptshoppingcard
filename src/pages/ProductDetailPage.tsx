@@ -48,7 +48,7 @@ const ProductDetailPage = (props: Iprops) => {
           )}
         </div>
       ) : (
-        <h1> there is no product</h1>
+        <h1>''</h1>
       )}
     </Wrapper>
   );

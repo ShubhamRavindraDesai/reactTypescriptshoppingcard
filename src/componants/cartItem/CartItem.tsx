@@ -1,56 +1,60 @@
 import React from "react";
 import "../wishItem/CartItem.styles.ts";
 import { Wrapper } from "../wishItem/CartItem.styles";
-import CustomButton from "../button/Button";
 import "./CartItem.styles";
-import {useDispatch,useSelector} from 'react-redux'
-import {productActions} from './../../store/store'
+import { useDispatch, useSelector } from "react-redux";
+import { productActions } from "./../../store/reducers/productReducer";
 import { updateProducts } from "../../controllers/prodController";
+import { Box, Button, CardMedia } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 interface Iprops {
   item: ProductType;
 }
 const CartItem = ({ item }: Iprops) => {
-  const dispatch = useDispatch()
-  const cartItems = useSelector((state: ProdData) => state.cartItems)
-  const wishItems = useSelector((state: ProdData) => state.wishItems)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: GlobalState) => state.product.cartItems);
+  const wishItems = useSelector((state: GlobalState) => state.product.wishItems);
 
   const cartHandler = () => {
     updateProducts(item, { inCart: false }).then(() => {
-      const newArr = cartItems.filter((el) => el !== item)
-      dispatch(productActions.getAllCartData(newArr))
+      const newArr = cartItems.filter((el) => el !== item);
+      dispatch(productActions.getAllCartData(newArr));
     });
-  }
+  };
 
   const wishHandler = () => {
     updateProducts(item, { inWish: true }).then(() => {
       const newArr = [...wishItems, item];
-      dispatch(productActions.getAllWishData(newArr))
+      dispatch(productActions.getAllWishData(newArr));
     });
-  }
+  };
   return (
     <Wrapper>
-      <div>
+      <Box onClick={() => navigate(`/shop/${item._id}`)}>
         <h3>{item.title}</h3>
-        <img src={item.images[0]} alt={item.title} />
-        <div className="information">
-          <p>Price: ${item.price}</p>
-        </div>
+        <CardMedia
+          component="img"
+          sx={{
+            height: 200,
+            width: 400,
+            maxHeight: { xs: 233, md: 167 },
+            maxWidth: { xs: 350, md: 250 },
+          }}
+          src={item.images[0]}
+        />
+        <p>Price: ${item.price}</p>
+      </Box>
       {item.inWish ? (
-        <CustomButton>Added to wishlist</CustomButton>
+        <Button variant="contained">Added to wishlist</Button>
       ) : (
-        <CustomButton
-          onClick={wishHandler}
-        >
+        <Button onClick={wishHandler} variant="contained">
           Add to wishlist
-        </CustomButton>
+        </Button>
       )}
-        <CustomButton
-          onClick={cartHandler}
-        >
-          Remove From Cart
-        </CustomButton>
-        <p>{item.price}</p>
-      </div>
+      <Button variant="contained" onClick={cartHandler}>
+        Remove From Cart
+      </Button>
     </Wrapper>
   );
 };

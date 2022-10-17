@@ -7,13 +7,25 @@ import AddNewProduct from "./pages/addNewProduct/AddNewProduct";
 import { Wrapper } from "./App.styles";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import PageNotFound from "./pages/PageNotFound";
-
+import { SignUp } from "./pages/signup/Signup";
+// import { SignUpContainer } from "./pages/signup/Signup";
 const App = () => {
   return (
     <Wrapper>
       <ResponsiveAppBar />
       <Routes>
-        <Route path="/" element={<Shop />} />
+        <Route
+          path="/"
+          element={
+            <>
+              {" "}
+              <img width="100%" height="500px" src="/hero.jpg" alt="" />
+              <Shop />
+            </>
+          }
+        />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/Shop" element={<Shop />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/WishList" element={<Wish />} />
         <Route path="/Admin" element={<AddNewProduct />} />

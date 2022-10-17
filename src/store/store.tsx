@@ -1,39 +1,58 @@
-import { createSlice, configureStore  } from '@reduxjs/toolkit'
-import axios from 'axios'
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
+import { rootSaga } from "./sagas/rootSagas";
+
+import productReducer from "./reducers/productReducer";
+import userReducer from "./reducers/userReducer";
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = configureStore({
+  reducer: { product: productReducer, user: userReducer },
+  middleware: [...getDefaultMiddleware(), sagaMiddleware],
+});
+
+sagaMiddleware.run(rootSaga);
+
+export default store;
 
 
-const initialState = {items: [], cartItems: [], wishItems:[] } as ProdData
-
-const productSlice = createSlice({
-  name: 'productData',
-  initialState,
-  reducers: {
-    getAllData(state, action) {
-      state.items = action.payload
-    },
-    getAllWishData(state, action) {
-      state.wishItems = action.payload
-    },
-    getAllCartData(state, action) {
-      state.cartItems = action.payload
-    }
-  },
-})
-
-// export const getShopProducts = ()=>{
-//   return async (path: string) => {
-    
-
-//     try {
-//       const response = await axios.get(path);
-//       return response.data.products;
-//     } catch (err) {
-//       throw err;
-//     }
-//   };
-// }
 
 
-const store = configureStore({ reducer: productSlice.reducer })
-export const productActions  = productSlice.actions
-export default store
+// import {  getDefaultMiddleware } from "@reduxjs/toolkit";
+// import createSagaMiddleware from "redux-saga";
+// import { rootSaga } from "./sagas/rootSagas";
+
+// import productReducer from "./reducers/productReducer";
+// import userReducer from "./reducers/userReducer";
+// import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
+
+
+
+// const listenerMiddleware = createListenerMiddleware();
+
+
+
+// const sagaMiddleware = createSagaMiddleware();
+
+// listenerMiddleware.startListening({
+//   actionCreator: getAllData,
+//   effect: async (action, listenerApi) => {
+//     console.log(listenerApi.getOriginalState());
+//     console.log(action);
+//     await listenerApi.delay(5000);
+//     console.log(listenerApi.getState());
+//   },
+// });
+
+// const store = configureStore({
+//   reducer: { product: productReducer, user: userReducer },
+//   // middleware: [...getDefaultMiddleware(), sagaMiddleware],
+//   middleware: (getDefaultMiddleWare) => {
+//     return getDefaultMiddleWare({ thunk: false }).prepend(listenerMiddleware);
+//   }
+// });
+
+// sagaMiddleware.run(rootSaga);
+
+// export default store;

@@ -1,8 +1,9 @@
 import axios from "axios";
 
-export const getShopProducts = async (path: string) => {
+export const getShopProducts = async () => {
   try {
-    const response = await axios.get(path);
+    
+    const response = await axios.get(`${process.env.REACT_APP_PATHURL}`);
     return response.data.products;
   } catch (err) {
     throw err;
@@ -31,12 +32,25 @@ export const deleteShopProducts = async (product: ProductType) => {
   }
 };
 
-export const createProduct = async (data: any) => {
-  try {
-    const response = await axios.post(`${process.env.REACT_APP_PATHURL}`, data);
+export const getnewData = (state: any) => state.newData
 
-    return response.data.product;
+export const createProduct = async (data: any) => {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_PATHURL}`, data);
+  
+      return response
+    } catch (err) {
+      throw err;
+    }
+  };
+
+export const signupUser = async ( data: UserData) => {
+  try {
+    const response = await axios.post(`${process.env.REACT_APP_USERURL}/signup`, data);
+    
+
+    return response.data.data;
   } catch (err) {
     throw err;
   }
-};
+}

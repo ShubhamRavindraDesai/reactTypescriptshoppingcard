@@ -1,10 +1,33 @@
 declare module "*.module.css";
 declare module "*.gif";
+declare module "*.jpg";
+
+interface GlobalState{
+  product: ProdData,
+  user:UserState
+}
+
+interface UserState{
+
+  userData: {
+    token: string
+  }
+  
+}
+
+interface UserData{
+
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
 
 interface ProdData {
   items: ProductType[];
   wishItems: ProductType[];
   cartItems: ProductType[];
+  newProd: ProductType
 }
 enum CountActionKind {
   RESDATA = "RESDATA",

@@ -1,8 +1,8 @@
-import CodeNotFound from "../Code404Page.gif";
-
 const PageNotFound = () => {
-  return <>
-  <img src={CodeNotFound} alt=""/>
-  </>;
+  return (
+    <>
+      <img src="../../public/Code404Page.gif" alt="" />
+    </>
+  );
 };
 export default PageNotFound;

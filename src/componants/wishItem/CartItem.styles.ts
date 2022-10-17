@@ -1,25 +1,17 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+export const Wrapper =  styled.div`
+display: flex;
+justify-content: space-between;
+flex-direction: column;
+width: 100%;
+border: 1px solid lightblue;
+border-radius: 20px;
+height: 100%;
+
+div {
   font-family: Arial, Helvetica, sans-serif;
-  border-bottom: 1px solid lightblue;
-  padding-bottom: 20px;
-
-  div {
-    flex: 1;
-  }
-
-  .information,
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  img {
-    max-width: 80px;
-    object-fit: cover;
-    margin-left: 40px;
-  }
+  padding: 1rem;
+  height: 100%;
+}
 `;

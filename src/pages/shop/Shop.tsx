@@ -1,44 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Wrapper } from "./Cart.styles";
 import { Grid } from "@mui/material";
 import Product from "../../componants/product/Product";
-import {useDispatch, useSelector} from 'react-redux'
-import {productActions} from '../../store/store'
-import { getShopProducts } from "../../controllers/prodController";
+import { useDispatch, useSelector } from "react-redux";
+// import { productActions } from "../../store/reducers/productReducer";
+// import { getShopProducts } from "../../controllers/prodController";
 import { useErrorHandler } from "react-error-boundary";
- 
+import { prodcutsSagaActions } from "../../store/sagas/products/sagaActions";
+
 interface Iprops {}
 
 const Shop = (props: Iprops) => {
-  const dispatch = useDispatch()
-  const products = useSelector((state: ProdData) => state.items)
+  const dispatch = useDispatch();
+  const products = useSelector((state: GlobalState) => state.product.items);
   const handleError = useErrorHandler();
 
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [emailError, setEmailError] = useState<any>();
 
   useEffect(() => {
-    getShopProducts(`${process.env.REACT_APP_PATHURL}`)
-      .then((resData) => {
-        dispatch(productActions.getAllData(resData));
-        const cartArr = resData.filter((el: ProductType) => el.inCart === true);
-        dispatch(productActions.getAllCartData(cartArr));
-        const wishArr = resData.filter((el: ProductType) => el.inWish === true);
-        dispatch(productActions.getAllWishData(wishArr));
-      })
-      .catch((err) => {
-        handleError(err);
-        throw err;
-      });
-  }, [dispatch,handleError]);
-
+    dispatch({ type: prodcutsSagaActions.FETCH_PRODUCT });
+  }, [dispatch, handleError]);
 
   return (
     <Wrapper>
-      <Grid container spacing={3} >
-        {products?.map((el) => (
-          <Grid item key={el._id} xs={12} sm={4} >
-            <Product
-              item={el}
-            />
+      <Grid container spacing={12}>
+        {products?.map((el: any) => (
+          <Grid item key={el._id} xs={2} sm={4} md={4}>
+            <Product item={el} />
           </Grid>
         ))}
       </Grid>

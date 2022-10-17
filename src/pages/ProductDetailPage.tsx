@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import { Wrapper } from "./Item.styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import CustomButton from "../componants/button/Button";
+import { Button } from "@mui/material";
 interface Iprops {}
 
 const ProductDetailPage = (props: Iprops) => {
@@ -20,7 +20,7 @@ const ProductDetailPage = (props: Iprops) => {
         setProduct(res.data.data.product);
       })
       .catch((err) => {});
-  }, []);
+  }, [id]);
 
   return (
     <Wrapper>
@@ -37,14 +37,14 @@ const ProductDetailPage = (props: Iprops) => {
             <DeleteIcon />
           </IconButton>
           {product.inWish ? (
-            <CustomButton>Added to wishlist</CustomButton>
+            <Button>Added to wishlist</Button>
           ) : (
-            <CustomButton>Add to wishlist</CustomButton>
+            <Button>Add to wishlist</Button>
           )}
           {product.inCart ? (
-            <CustomButton> Added to Cart</CustomButton>
+            <Button> Added to Cart</Button>
           ) : (
-            <CustomButton>Add to Cart</CustomButton>
+            <Button>Add to Cart</Button>
           )}
         </div>
       ) : (

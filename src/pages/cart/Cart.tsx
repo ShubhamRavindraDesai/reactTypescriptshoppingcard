@@ -3,24 +3,25 @@ import { Wrapper } from "../shop/Cart.styles";
 import { Grid } from "@mui/material";
 import CartItem from "../../componants/cartItem/CartItem";
 import {useDispatch, useSelector} from 'react-redux'
-import {productActions} from '../../store/store'
-import { getShopProducts } from "../../controllers/prodController";
+// import {productActions} from '../../store/reducers/productReducer'
+// import { getShopProducts } from "../../controllers/prodController";
+import { prodcutsSagaActions } from "../../store/sagas/products/sagaActions";
  
 
 const Cart: React.FC<{}> = () => {
   const dispatch = useDispatch()
-  const cartProducts = useSelector((state: ProdData) => state.cartItems)
-  console.log(cartProducts, 'boom')
+  const cartProducts = useSelector((state: GlobalState) => state.product.cartItems)
   useEffect(() => {
-    getShopProducts(`${process.env.REACT_APP_PATHURL}`)
-      .then((resData) => {
-        const cartArr = resData.filter((el: ProductType) => el.inCart === true);
-        dispatch(productActions.getAllCartData(cartArr));
-      })
-      .catch((err) => {
-        throw err;
-      });
-  }, []);
+    dispatch({ type: prodcutsSagaActions.FETCH_PRODUCT })
+    // getShopProducts(`${process.env.REACT_APP_PATHURL}`)
+    //   .then((resData) => {
+    //     const cartArr = resData.filter((el: ProductType) => el.inCart === true);
+    //     dispatch(productActions.getAllCartData(cartArr));
+    //   })
+    //   .catch((err) => {
+    //     throw err;
+    //   });
+  }, [dispatch]);
   return (
     <Wrapper>
       <Grid container spacing={3}>

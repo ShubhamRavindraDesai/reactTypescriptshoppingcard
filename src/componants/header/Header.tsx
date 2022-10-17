@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router-dom";
 
-const pages = ["Admin", "Wishlist", "Cart"];
+const pages = ["Shop","Admin", "Wishlist", "Cart","signup"];
 
 const ResponsiveAppBar = () => {
   const navigate = useNavigate();

@@ -1,33 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import { useLocation } from "react-router-dom";
-import {useDispatch,useSelector} from 'react-redux'
-import {productActions} from '../../store/store'
-import { createProduct } from "../../controllers/prodController";
+import { useDispatch, useSelector } from "react-redux";
+import { CREATE_PRODUCT } from "../../store/sagas/products/sagaActions";
 
 const AddNewProduct: React.FC<{}> = () => {
-
   const [allInput, setAllInput] = useState({
     Title: "",
     image: "",
     discountPercentage: "",
     description: "",
-    price: ''
+    price: "",
   });
 
-  // const allInput = useRef<HTMLInputElement>(null)
-
-  const inputTitle = useRef<HTMLInputElement>(null);
-  const inputDes = useRef<HTMLInputElement>(null);
-  const inputImg = useRef<HTMLInputElement>(null);
-  const inputPrice = useRef<HTMLInputElement>(null);
-  const inputDiscountPercentage = useRef<HTMLInputElement>(null);
-
-  const dispatch = useDispatch()
-  const items = useSelector((state: ProdData) => state.items)
+  const dispatch = useDispatch();
+  const newProd = useSelector((state: ProdData) => state.newProd);
+  console.log(newProd)
 
   const location = useLocation();
   const obj = new URLSearchParams(location.search);
@@ -35,44 +26,31 @@ const AddNewProduct: React.FC<{}> = () => {
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    if (null !== inputTitle.current) {
-      const newProd = {
-        title: inputTitle.current.value,
-        description: inputDes.current?.value,
-        price: inputPrice.current?.value,
-        images: inputImg.current?.value,
-        discountPercentage: inputDiscountPercentage.current?.value,
-      };
-      createProduct(newProd).then((prod) => {
-        const newArr = [...items, prod];
-        dispatch(productActions.getAllData(newArr))
-      });
-      inputTitle.current.value = "";
-      inputDes.current!.value = "";
-      inputPrice.current!.value = "";
-      inputImg.current!.value = "";
-      inputDiscountPercentage.current!.value = "";
-    } else {
-      return;
+
+    if (allInput) {
+      const newProd = allInput;
+      dispatch({ type: CREATE_PRODUCT , payload: newProd})
     }
   };
 
-
-const handleInput = (e: React.FormEvent) => {
-  // console.log(e)
-  setAllInput((prevstate) => {
-    const value = (e.target as HTMLInputElement).value
-    console.log(allInput)
-    return {...prevstate, [(e.target as HTMLInputElement).name]: value}
-    
-  })
-}
-
+  const handleInput = (e: React.FormEvent) => {
+    setAllInput((prevstate) => {
+      const value = (e.target as HTMLInputElement).value;
+      return { ...prevstate, [(e.target as HTMLInputElement).name]: value };
+    });
+  };
 
   return (
     <>
-      <Box>
-        <form onSubmit={submitHandler}>
+      <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { m: 1, width: "25ch" },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <div >
           <TextField
             disabled
             id="outlined-disabled"
@@ -83,34 +61,20 @@ const handleInput = (e: React.FormEvent) => {
             id="standard-basic"
             label="Title"
             variant="standard"
-            inputRef={inputTitle}
             onChange={handleInput}
-            name='Title'
+            name="Title"
           />
           <TextField
             id="standard-basic"
-            label="Description"
-            name='Description'
+            label="discountPercentage"
             variant="standard"
-            multiline
-            rows={2}
-            inputRef={inputDes}
             onChange={handleInput}
           />
           <TextField
             id="standard-basic"
-            label="price"
-            name='price'
+            label="Price"
+            name="price"
             variant="standard"
-            inputRef={inputPrice}
-            onChange={handleInput}
-          />
-          <TextField
-            id="standard-basic"
-            label="image"
-            name='price'
-            variant="standard"
-            inputRef={inputImg}
             onChange={handleInput}
           />
           <input
@@ -121,15 +85,17 @@ const handleInput = (e: React.FormEvent) => {
           />
           <TextField
             id="standard-basic"
-            label="discountPercentage"
+            label="Description"
+            name="Description"
             variant="standard"
-            inputRef={inputDiscountPercentage}
+            multiline
+            rows={2}
             onChange={handleInput}
           />
-          <Button type="submit" variant="contained" endIcon={<SendIcon />}>
+          <Button type="submit" variant="contained" onClick={submitHandler} endIcon={<SendIcon  />}>
             Submit
           </Button>
-        </form>
+        </div>
       </Box>
     </>
   );

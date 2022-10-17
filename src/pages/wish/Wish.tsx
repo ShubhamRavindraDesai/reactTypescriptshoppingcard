@@ -3,21 +3,23 @@ import { Wrapper } from "../shop/Cart.styles";
 import { Grid } from "@mui/material";
 import WishItem from "../../componants/wishItem/WishItem";
 import {useDispatch, useSelector} from 'react-redux'
-import {productActions} from '../../store/store'
-import { getShopProducts } from "../../controllers/prodController";
+// import {productActions} from '../../store/reducers/productReducer'
+// import { getShopProducts } from "../../controllers/prodController";
+import { prodcutsSagaActions } from "../../store/sagas/products/sagaActions";
 const Wish: React.FC<{}> = () => {
   const dispatch = useDispatch()
-  const wishProducts = useSelector((state: ProdData) => state.wishItems)
+  const wishProducts = useSelector((state: GlobalState) => state.product.wishItems)
   useEffect(() => {
-    getShopProducts(`${process.env.REACT_APP_PATHURL}`)
-      .then((resData) => {
-        const wishArr = resData.filter((el: ProductType) => el.inWish === true);
-        dispatch(productActions.getAllWishData(wishArr));
-      })
-      .catch((err) => {
-        throw err;
-      });
-  }, []);
+    dispatch({ type: prodcutsSagaActions.FETCH_PRODUCT })
+    // getShopProducts(`${process.env.REACT_APP_PATHURL}`)
+    //   .then((resData) => {
+    //     const wishArr = resData.filter((el: ProductType) => el.inWish === true);
+    //     dispatch(productActions.getAllWishData(wishArr));
+    //   })
+    //   .catch((err) => {
+    //     throw err;
+    //   });
+  }, [dispatch]);
 
   return (
     <Wrapper>

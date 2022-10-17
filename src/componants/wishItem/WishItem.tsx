@@ -1,58 +1,62 @@
 import { Wrapper } from "./CartItem.styles";
-import CustomButton from "../button/Button";
-import {useDispatch, useSelector} from 'react-redux'
-import {productActions} from './../../store/store'
+import { useDispatch, useSelector } from "react-redux";
+import { productActions } from "./../../store/reducers/productReducer";
 import { updateProducts } from "../../controllers/prodController";
+import { Box, Button, CardMedia } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface Iprops {
   item: ProductType;
 }
 
-const WishItem = ({ item}: Iprops) => {
-  const dispatch = useDispatch()
-  const cartItems = useSelector((state: ProdData) => state.cartItems)
-  const wishItems = useSelector((state: ProdData) => state.wishItems)
+const WishItem = ({ item }: Iprops) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const cartItems = useSelector((state: GlobalState) => state.product.cartItems);
+  const wishItems = useSelector((state: GlobalState) => state.product.wishItems);
 
   const cartHandler = () => {
     updateProducts(item, { inCart: true }).then(() => {
       const newArr = [...cartItems, item];
-      dispatch(productActions.getAllCartData(newArr))
+      dispatch(productActions.getAllCartData(newArr));
     });
-  }
+  };
 
   const wishHandler = () => {
     updateProducts(item, { inWish: false }).then(() => {
-      const newArr = wishItems.filter((el) => el !== item)
-      dispatch(productActions.getAllWishData(newArr))
+      const newArr = wishItems.filter((el) => el !== item);
+      dispatch(productActions.getAllWishData(newArr));
     });
-  }
+  };
   return (
     <Wrapper>
-      <div>
+      <Box onClick={() => navigate(`/shop/${item._id}`)}>
+        <CardMedia
+          component="img"
+          sx={{
+            height: 200,
+            width: 400,
+            maxHeight: { xs: 233, md: 167 },
+            maxWidth: { xs: 350, md: 250 },
+          }}
+          src={item.images[0]}
+        />
         <h3>{item.title}</h3>
-        <div className="information">
-          <p>Price: ${item.price}</p>
-          <p>Total: ${(item.price * item.price).toFixed(2)}</p>
-        </div>
-        <div className="buttons">
-        {item.inCart ? (
-        <CustomButton> Added to Cart</CustomButton>
+        <p>{item.description.substring(0, 50)}...</p>
+        <h3>${item.price}</h3>
+      </Box>
+      {item.inCart ? (
+        <Button variant="contained">Added to Cart</Button>
       ) : (
-        <CustomButton
-          onClick={cartHandler} 
-        >
+        <Button variant="contained" onClick={cartHandler}>
           Add to Cart
-        </CustomButton>
+        </Button>
       )}
-          <CustomButton
-            onClick={wishHandler}
-          >
-            Remove From WishList
-          </CustomButton>
-          <p>{item.price}</p>
-        </div>
-      </div>
-      <img src={item.images[0]} alt={item.title} />
+      <Button variant="contained" onClick={wishHandler}>
+        {" "}
+        Remove from wish
+      </Button>
     </Wrapper>
   );
 };

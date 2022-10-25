@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
 
  export const client = new ApolloClient({
@@ -6,7 +6,6 @@ import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client
     cache: new InMemoryCache(),
   });
 
-  // const client = ...
 
 client
 .query({

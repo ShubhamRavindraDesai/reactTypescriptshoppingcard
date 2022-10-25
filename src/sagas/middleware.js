@@ -1,7 +1,7 @@
 
 import { call, takeEvery } from "redux-saga/effects";
 import { getShopProducts } from "../controllers/prodController";
-import { productActions } from "./reducers/productReducer";
+import { productActions } from "../reducers/productReducer";
 
 const fetchTodo = (url) => fetch(url).then((res) => res.json());
 

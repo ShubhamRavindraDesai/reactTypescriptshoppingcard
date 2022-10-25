@@ -1,6 +1,6 @@
-import { Wrapper } from "./CartItem.styles";
+import { Wrapper } from "./index.styles";
 import { useDispatch, useSelector } from "react-redux";
-import { productActions } from "./../../store/reducers/productReducer";
+import { productActions } from "../../reducers/productReducer";
 import { updateProducts } from "../../controllers/prodController";
 import { Box, Button, CardMedia } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +13,12 @@ const WishItem = ({ item }: Iprops) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const cartItems = useSelector((state: GlobalState) => state.product.cartItems);
-  const wishItems = useSelector((state: GlobalState) => state.product.wishItems);
+  const cartItems = useSelector(
+    (state: GlobalState) => state.product.cartItems
+  );
+  const wishItems = useSelector(
+    (state: GlobalState) => state.product.wishItems
+  );
 
   const cartHandler = () => {
     updateProducts(item, { inCart: true }).then(() => {

@@ -5,7 +5,7 @@ import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { CREATE_PRODUCT } from "../../store/sagas/products/sagaActions";
+import { CREATE_PRODUCT } from "../../sagas/products/sagaActions";
 
 const AddNewProduct: React.FC<{}> = () => {
   const [allInput, setAllInput] = useState({

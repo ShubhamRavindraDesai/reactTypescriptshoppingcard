@@ -16,7 +16,7 @@ import Copyright from "./CopyRights";
 import React, { useState } from "react";
 import { signupUser } from "../../controllers/prodController";
 // import { baseUrl } from "../Config";
-import {userActions} from './../../store/reducers/userReducer'
+import { userActions } from "../../reducers/userReducer";
 import { useDispatch } from "react-redux";
 
 export const SignUp = () => {

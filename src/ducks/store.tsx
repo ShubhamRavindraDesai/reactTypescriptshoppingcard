@@ -1,9 +1,9 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import { rootSaga } from "./sagas/rootSagas";
+import { rootSaga } from "../sagas/rootSagas";
 
-import productReducer from "./reducers/productReducer";
-import userReducer from "./reducers/userReducer";
+import productReducer from "../reducers/productReducer";
+import userReducer from "../reducers/userReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -16,9 +16,6 @@ sagaMiddleware.run(rootSaga);
 
 export default store;
 
-
-
-
 // import {  getDefaultMiddleware } from "@reduxjs/toolkit";
 // import createSagaMiddleware from "redux-saga";
 // import { rootSaga } from "./sagas/rootSagas";
@@ -27,11 +24,7 @@ export default store;
 // import userReducer from "./reducers/userReducer";
 // import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
 
-
-
 // const listenerMiddleware = createListenerMiddleware();
-
-
 
 // const sagaMiddleware = createSagaMiddleware();
 

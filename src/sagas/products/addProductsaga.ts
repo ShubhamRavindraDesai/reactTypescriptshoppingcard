@@ -1,5 +1,5 @@
 import { call, put, takeEvery  } from "redux-saga/effects";
-import { createProduct } from "../../../controllers/prodController";
+import { createProduct } from "../../controllers/prodController";
 import { productActions } from "../../reducers/productReducer";
 
  import { CREATE_PRODUCT } from "./sagaActions";

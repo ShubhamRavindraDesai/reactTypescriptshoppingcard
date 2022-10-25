@@ -5,10 +5,18 @@ import { BrowserRouter } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./ErrorFallback";
 import { Provider } from "react-redux";
-import store from "./store/store";
-// import dotenv from 'dotenv'
+import store from "./ducks/store";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  gql,
+} from "@apollo/client";
 
-// dotenv.config();
+const client = new ApolloClient({
+  uri: "https://flyby-gateway.herokuapp.com/",
+  cache: new InMemoryCache(),
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -22,7 +30,9 @@ root.render(
       }}
     >
       <Provider store={store}>
-        <App />
+        <ApolloProvider client={client}>
+          <App />
+        </ApolloProvider>
       </Provider>
     </ErrorBoundary>
   </BrowserRouter>

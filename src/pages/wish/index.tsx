@@ -1,11 +1,11 @@
 import React, {useEffect } from "react";
-import { Wrapper } from "../shop/Cart.styles";
+import { Wrapper } from "../shop/index.styles";
 import { Grid } from "@mui/material";
-import WishItem from "../../componants/wishItem/WishItem";
-import {useDispatch, useSelector} from 'react-redux'
+import WishItem from "../../containers/wishItem";
+import { useDispatch, useSelector } from "react-redux";
 // import {productActions} from '../../store/reducers/productReducer'
 // import { getShopProducts } from "../../controllers/prodController";
-import { prodcutsSagaActions } from "../../store/sagas/products/sagaActions";
+import { prodcutsSagaActions } from "../../sagas/products/sagaActions";
 const Wish: React.FC<{}> = () => {
   const dispatch = useDispatch()
   const wishProducts = useSelector((state: GlobalState) => state.product.wishItems)

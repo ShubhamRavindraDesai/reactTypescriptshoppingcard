@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Wrapper } from "./Cart.styles";
+import { Wrapper } from "./index.styles";
 import { Grid } from "@mui/material";
-import Product from "../../componants/product/Product";
+import Product from "../../containers/product";
 import { useDispatch, useSelector } from "react-redux";
 // import { productActions } from "../../store/reducers/productReducer";
 // import { getShopProducts } from "../../controllers/prodController";
 import { useErrorHandler } from "react-error-boundary";
-import { prodcutsSagaActions } from "../../store/sagas/products/sagaActions";
+import { prodcutsSagaActions } from "../../sagas/products/sagaActions";
 
 interface Iprops {}
 

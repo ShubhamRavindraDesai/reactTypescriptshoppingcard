@@ -1,11 +1,11 @@
-import { Wrapper } from "./Item.styles";
+import { Wrapper } from "./index.styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { productActions } from "./../../store/reducers/productReducer";
+import { productActions } from "../../reducers/productReducer";
 import {
   deleteShopProducts,
   updateProducts,

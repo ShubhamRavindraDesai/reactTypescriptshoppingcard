@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { Wrapper } from "./Item.styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import { Button } from "@mui/material";
-interface Iprops {}
+import { Button, Container } from "@mui/material";
 
-const ProductDetailPage = (props: Iprops) => {
+const ProductDetailPage = () => {
   const [product, setProduct] = useState<ProductType>();
 
   const location = useLocation();
@@ -23,7 +21,7 @@ const ProductDetailPage = (props: Iprops) => {
   }, [id]);
 
   return (
-    <Wrapper>
+    <Container component="main" maxWidth="xs">
       {product ? (
         <div>
           <img src={product.images[0]} alt={product.title} />
@@ -50,7 +48,7 @@ const ProductDetailPage = (props: Iprops) => {
       ) : (
         <h1>''</h1>
       )}
-    </Wrapper>
+    </Container>
   );
 };
 

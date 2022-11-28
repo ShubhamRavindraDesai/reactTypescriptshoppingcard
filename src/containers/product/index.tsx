@@ -1,4 +1,3 @@
-import { Wrapper } from "./index.styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import IconButton from "@mui/material/IconButton";

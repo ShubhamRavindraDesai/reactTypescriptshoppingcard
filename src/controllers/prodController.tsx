@@ -49,7 +49,7 @@ export const signupUser = async ( data: UserData) => {
     const response = await axios.post(`${process.env.REACT_APP_USERURL}/signup`, data);
     
 
-    return response.data.data;
+    return response.data;
   } catch (err) {
     throw err;
   }

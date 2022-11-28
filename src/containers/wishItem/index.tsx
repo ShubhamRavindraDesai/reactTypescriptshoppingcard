@@ -1,4 +1,3 @@
-import { Wrapper } from "./index.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { productActions } from "../../reducers/productReducer";
 import { updateProducts } from "../../controllers/prodController";
@@ -34,22 +33,21 @@ const WishItem = ({ item }: Iprops) => {
     });
   };
   return (
-    <Wrapper>
-      <Box onClick={() => navigate(`/shop/${item._id}`)}>
-        <CardMedia
-          component="img"
-          sx={{
-            height: 200,
-            width: 400,
-            maxHeight: { xs: 233, md: 167 },
-            maxWidth: { xs: 350, md: 250 },
-          }}
-          src={item.images[0]}
-        />
-        <h3>{item.title}</h3>
-        <p>{item.description.substring(0, 50)}...</p>
-        <h3>${item.price}</h3>
-      </Box>
+      <Box sx={{ borderRadius: "16px" }}>
+        <Box
+          onClick={() => navigate(`/shop/${item._id}`)}
+          sx={{ borderRadius: "16px" }}
+        >
+          <CardMedia
+            height="250"
+            component="img"
+            src={item.images[0]}
+            sx={{ padding: "1em 1em 0 1em" }}
+          />
+          <h3>{item.title}</h3>
+          <p>{item.description.substring(0, 30)}...</p>
+          <h3>${item.price}</h3>
+        </Box>
       {item.inCart ? (
         <Button variant="contained">Added to Cart</Button>
       ) : (
@@ -61,7 +59,8 @@ const WishItem = ({ item }: Iprops) => {
         {" "}
         Remove from wish
       </Button>
-    </Wrapper>
+      </Box>
+   
   );
 };
 

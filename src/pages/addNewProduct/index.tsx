@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
-import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { CREATE_PRODUCT } from "../../sagas/products/sagaActions";
+import { Container, CssBaseline,  Typography } from "@mui/material";
 
-const AddNewProduct: React.FC<{}> = () => {
+const AddNewProduct = () => {
   const [allInput, setAllInput] = useState({
     Title: "",
     image: "",
@@ -19,10 +17,6 @@ const AddNewProduct: React.FC<{}> = () => {
   const dispatch = useDispatch();
   const newProd = useSelector((state: ProdData) => state.newProd);
   console.log(newProd)
-
-  const location = useLocation();
-  const obj = new URLSearchParams(location.search);
-  const prefillValue = obj.get("q") || "React Test";
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,63 +35,66 @@ const AddNewProduct: React.FC<{}> = () => {
   };
 
   return (
-    <>
-      <Box
-        component="form"
-        sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <div >
-          <TextField
-            disabled
-            id="outlined-disabled"
-            label="Disabled"
-            defaultValue={`${prefillValue}`}
-          />
+    <Container component="main" maxWidth="xs">
+    <CssBaseline />
+    <div>
+     
+      <Typography component="h1" variant="h5">
+        Add Product
+      </Typography>
+      <form  onSubmit={submitHandler}>
           <TextField
             id="standard-basic"
             label="Title"
-            variant="standard"
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
             onChange={handleInput}
             name="Title"
+            autoFocus
           />
           <TextField
             id="standard-basic"
             label="discountPercentage"
-            variant="standard"
+            variant="outlined"
+          margin="normal"
+          required
+          fullWidth
             onChange={handleInput}
           />
           <TextField
             id="standard-basic"
             label="Price"
             name="price"
-            variant="standard"
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
             onChange={handleInput}
-          />
-          <input
-            accept="image/*"
-            id="contained-button-file"
-            multiple
-            type="file"
           />
           <TextField
             id="standard-basic"
             label="Description"
             name="Description"
-            variant="standard"
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
             multiline
             rows={2}
             onChange={handleInput}
           />
-          <Button type="submit" variant="contained" onClick={submitHandler} endIcon={<SendIcon  />}>
-            Submit
-          </Button>
-        </div>
-      </Box>
-    </>
+        {/* <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            /> */}
+        <Button type="submit" fullWidth variant="contained" color="primary">
+          Submit
+        </Button>
+      </form>
+    </div>
+  </Container>
   );
 };
 

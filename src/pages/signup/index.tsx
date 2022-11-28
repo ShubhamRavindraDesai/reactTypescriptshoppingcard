@@ -18,10 +18,11 @@ import { signupUser } from "../../controllers/prodController";
 // import { baseUrl } from "../Config";
 import { userActions } from "../../reducers/userReducer";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
   const dispatch = useDispatch()
-
+  const navigate = useNavigate();
   const [inputState, setInputState] = useState({
     username: "",
     email: "",
@@ -30,12 +31,16 @@ export const SignUp = () => {
   })
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    
+    console.log(inputState);
 
-    signupUser(inputState).then(res => {
-      dispatch(userActions.saveUserToken(res.token))
-    })
-    // dispatch(userActions.setUserData(inputState))
+    (async () =>{
+     const res = await  signupUser(inputState)
+     console.log(res)
+     if(res.token) {
+      navigate(`/user`)
+     }
+     dispatch(userActions.saveUserToken(res.token))
+    })();
     
   };
 

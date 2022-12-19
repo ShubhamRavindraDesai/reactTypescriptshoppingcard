@@ -20,6 +20,7 @@ const WishItem = ({ item }: Iprops) => {
   );
 
   const cartHandler = () => {
+    
     updateProducts(item, { inCart: true }).then(() => {
       const newArr = [...cartItems, item];
       dispatch(productActions.getAllCartData(newArr));

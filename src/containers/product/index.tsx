@@ -41,7 +41,7 @@ const Product = ({ item }: Iprops) => {
 
   return (
     <>
-      <Box sx={{ borderRadius: "16px" }}>
+      <Box sx={{ borderRadius: "16px"}}>
         <Box
           onClick={() => navigate(`/shop/${item._id}`)}
           sx={{ borderRadius: "16px" }}
@@ -49,43 +49,13 @@ const Product = ({ item }: Iprops) => {
           <CardMedia
             height="250"
             component="img"
+            width="100%"
             src={item.images[0]}
-            sx={{ padding: "1em 1em 0 1em" }}
+            sx={{ padding: "1em 1em 1em 0em", objectFit: "unset", borderRadius: "50px" }}
           />
           <h3>{item.title}</h3>
           <p>{item.description.substring(0, 30)}...</p>
           <h3>${item.price}</h3>
-        </Box>
-        <Box>
-          <IconButton
-            aria-label="delete"
-            id={`${item._id}`}
-            onClick={deleteHandler}
-          >
-            <DeleteIcon />
-          </IconButton>
-          {state.product.wishItems.includes(item) ? (
-            <Button variant="contained">Added to wishlist</Button>
-          ) : (
-            <Button
-              variant="contained"
-              startIcon={<FavoriteIcon />}
-              onClick={wishHandler}
-            >
-              Add to wishlist
-            </Button>
-          )}
-          {state.product.cartItems.includes(item) ? (
-            <Button variant="contained">Added to Cart</Button>
-          ) : (
-            <Button
-              variant="contained"
-              startIcon={<AddShoppingCartIcon />}
-              onClick={cartHandler}
-            >
-              Add to Cart
-            </Button>
-          )}
         </Box>
       </Box>
     </>

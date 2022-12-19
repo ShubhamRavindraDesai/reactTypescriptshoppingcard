@@ -13,7 +13,19 @@ const Shop = () => {
   const products = useSelector((state: GlobalState) => state.product.items);
   const handleError = useErrorHandler();
 
-
+  useEffect(() => {
+    const testUrl =
+    "https://gravatar.com/avatar/78ba6075a31a2b00f2f73dc02eb2ed38?s=400&d=robohash&r=x";
+    (async (url: string) => {
+      try {
+        const res = await fetch(url);
+        console.log({res}, url, "Hereee");
+        return res?.status;
+      } catch (error) {
+        console.error(error);
+      }
+    })(testUrl);
+  }, []);
   useEffect(() => {
     dispatch({ type: prodcutsSagaActions.FETCH_PRODUCT });
   }, [dispatch, handleError]);

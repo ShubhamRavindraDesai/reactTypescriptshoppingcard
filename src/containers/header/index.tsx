@@ -5,7 +5,17 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import AdbIcon from "@mui/icons-material/Adb";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const darkTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#361096',
+    },
+  },
+});
+
 
 const pages = ["Admin", "Wishlist", "Cart","signup"];
 
@@ -13,6 +23,9 @@ const ResponsiveAppBar = () => {
   const navigate = useNavigate();
 
   return (
+    <>
+
+     <ThemeProvider theme={darkTheme}>
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -34,7 +47,6 @@ const ResponsiveAppBar = () => {
           >
             EXPLORE
           </Typography>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
@@ -49,6 +61,9 @@ const ResponsiveAppBar = () => {
         </Toolbar>
       </Container>
     </AppBar>
+    </ThemeProvider>
+    <Outlet/>
+    </>
   );
 };
 export default ResponsiveAppBar;

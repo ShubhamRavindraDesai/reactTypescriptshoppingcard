@@ -12,9 +12,9 @@ import User from "./pages/user";
 const App = () => {
   return (
     <Wrapper>
-      <ResponsiveAppBar />
       <Routes>
-        <Route path="/"  element={<Shop />}/>
+        <Route path="/"  element={<ResponsiveAppBar />}>
+        <Route index element={<Shop />}/>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/WishList" element={<Wish />} />
@@ -22,6 +22,7 @@ const App = () => {
         <Route path="/Shop/:id" element={<ProductDetailPage />} />
         <Route path="*" element={<PageNotFound />} />
         <Route path='/user' element={<User/>}/>
+        </Route>
       </Routes>
     </Wrapper>
   );

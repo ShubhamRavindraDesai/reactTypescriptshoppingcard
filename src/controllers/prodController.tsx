@@ -44,13 +44,4 @@ export const createProduct = async (data: any) => {
     }
   };
 
-export const signupUser = async ( data: UserData) => {
-  try {
-    const response = await axios.post(`${process.env.REACT_APP_USERURL}/signup`, data);
-    
 
-    return response.data;
-  } catch (err) {
-    throw err;
-  }
-}

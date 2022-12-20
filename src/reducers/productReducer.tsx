@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { items: [], cartItems: [], wishItems: [], newProd: {} } as unknown as ProdData;
+const initialState = { items: [], cartItems: [], wishItems: [], newProd: {}, test:[] } as unknown as ProdData;
 
 const productSlice = createSlice({
   name: "productData",

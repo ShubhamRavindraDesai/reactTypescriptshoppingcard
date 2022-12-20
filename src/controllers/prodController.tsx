@@ -3,7 +3,7 @@ import axios from "axios";
 export const getShopProducts = async () => {
   try {
     
-    const response = await axios.get(`${process.env.REACT_APP_PATHURL}`);
+    const response = await axios.get("https://wonderful-frangollo-2b1826.netlify.app");
     return response.data.products;
   } catch (err) {
     throw err;
@@ -15,7 +15,7 @@ export const updateProducts = async (
   data: { inWish?: boolean; inCart?: boolean }
 ) => {
   try {
-    await axios.patch(`${process.env.REACT_APP_PATHURL}/${product._id}`, data);
+    await axios.patch(`https://wonderful-frangollo-2b1826.netlify.app/${product._id}`, data);
   } catch (err) {
     throw err;
   }
@@ -24,7 +24,7 @@ export const updateProducts = async (
 export const deleteShopProducts = async (product: ProductType) => {
   try {
     const response = await axios.delete(
-      `${process.env.REACT_APP_PATHURL}/${product._id}`
+      `https://wonderful-frangollo-2b1826.netlify.app/${product._id}`
     );
     return response.data.status;
   } catch (err) {
